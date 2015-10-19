@@ -355,6 +355,7 @@ function Controller:listenToPalm()
 	end
 end
 
+--Do the hardwork
 print("Try to gather online devices")
 c = Controller:new()
 c:regulate()
