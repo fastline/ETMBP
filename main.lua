@@ -271,6 +271,18 @@ function Controller:getMaintenance()
 	else return false end
 end
 
+function Controller:setReactorOnline(state)
+	for i, v in pairs(self.controlledDevices) do
+		if v:getCategory() == "reactor" then v:setActive(state) end
+	end
+end
+
+function Controller:setAllTurbineOnline(state)
+	for i, v in pairs(self.controlledDevices) do
+		if v:getCategory() == "turbine" then v:setActive(state) end
+	end
+end
+
 --Regulate by Warren G
 function Controller:regulate()
 	generationCycle = false
@@ -283,10 +295,10 @@ function Controller:regulate()
 	end
 	if self:getMaintenance() then
 		for i, v in pairs(self.controlledDevices) do
-			if v["category"] == "turbine" then
-				--v:setOffline()
-			elseif v["category"] == "reactor" then
-				--v:setActive(false)
+			if v:getCategory() == "turbine" then
+				v:setActive(false)
+			elseif v:getCategory() == "reactor" then
+				v:setActive(false)
 			end
 		end
 	else
