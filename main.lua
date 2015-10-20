@@ -183,7 +183,7 @@ function Capacitor:new(o, id, blockCount, blockStore)
 	self.__index = self
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
-	self.blockCount = blockCount or 131
+	self.blockCount = blockCount or 51
 	self.blockStore = blockStore or 2500000
 	return o
 end
@@ -212,7 +212,7 @@ function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minS
 	o = o or {}
 	setmetatable(o, self)
 	self.__index = self
-	self.optimalRPM = optimalRPM or 1820
+	self.optimalRPM = optimalRPM or 1870
 	self.optimalRodPercent = optimalRodPercent or 40
 	self.minTemp = minTemp or 500
 	self.maxTemp = maxTemp or 550
@@ -263,18 +263,12 @@ function Controller:wrapAll()
 end
 
 function Controller:getCableActive(color)
-	--return redstone.testBundleInput(bSide, color)
 	return colors.test(redstone.getBundledInput(bSide), color)
 end
 
 function Controller:getMaintenance()
-	self.liveSettings["maintenancebyYelloriumLevel"] = self:getCableActive(colors.white)
-	self.liveSettings["maintenanceByLever"] = self:getCableActive(colors.purple)
-	if self.liveSettings["maintenanceByLever"] or self.liveSettings["maintenancebyPalm"] or self.liveSettings["maintenancebyYelloriumLevel"] then
-		return true
-	else
-		return false
-	end
+	if self:getCableActive(colors.white) or self:getCableActive(colors.purple) or self.liveSettings["maintenancebyYelloriumLevel"] then return true
+	else return false end
 end
 
 --Regulate by Warren G
