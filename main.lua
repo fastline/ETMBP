@@ -85,7 +85,7 @@ function Monitor:new(o, id, width, height)
 	self.__index = self
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
-	width, height = width, height or self:getSize()
+	self.width, self.height = width, height or self:getSize()
 	return o
 end
 
@@ -357,7 +357,44 @@ function Controller:listenToPalm()
 	end
 end
 
+function Controller:getMonitors()
+	monitors = {}
+	for i, v in pairs(controlledDevices) do
+		if v:getCategory() == "monitor" then
+			table.insert(monitors, v)
+		end
+	end
+	return monitors
+end
+
+--View
+function View:new (o, monitors)
+	o = o or {}
+	setmetatable(o, self)
+	self.__index = self
+	self.monitors = monitors or {}
+	self.termMon = self:findTerm()
+	return o
+end
+
+function View:findTerm()
+	size = 256
+	termMon = {}
+	for i, v in pairs(self.monitors) do
+		if (v:getSize() < size ) then
+			termMon = v
+		end
+	end
+	return termMon
+end
+
+function View:redirToTerm()
+	term.redirect(self.termMon)
+end
 --Do the hardwork
+v = View:new(nil, getMonitors())
+v:redirToTerm()
+
 print("Try to gather online devices")
 c = Controller:new()
 c:regulate()
