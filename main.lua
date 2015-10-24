@@ -392,9 +392,11 @@ function View:redirToTerm()
 	term.redirect(self.termMon)
 end
 --Do the hardwork
-v = View:new(nil, getMonitors())
-v:redirToTerm()
 
-print("Try to gather online devices")
+
+
 c = Controller:new()
+v = View:new(nil, c:getMonitors())
+v:redirToTerm()
 c:regulate()
+print("Try to gather online devices")
