@@ -85,7 +85,7 @@ function Monitor:new(o, id, width, height)
 	self.__index = self
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
-	self.width, self.height = width, height or self:getSize()
+	width, height = width, height or self:getSize()
 	return o
 end
 
@@ -253,6 +253,9 @@ function Controller:wrapAll()
 		elseif string.find(v, "capacitor") then
 			table.insert(controlledDevices, Capacitor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "capacitor"
+		elseif string.find(v, "monitor") then
+			table.insert(controlledDevices, Monitor:new(nil, v))
+			controlledDevices[#controlledDevices].category = "monitor"
 		end
 		print("Connected")
 	end
@@ -354,47 +357,26 @@ function Controller:listenToPalm()
 	end
 end
 
+function Controller:getMonitors()
+	monitors = {}
+	for i, v in pairs(controlledDevices) do
+		if v:getCategory() == "monitor" then
+			table.insert(monitors, v)
+		end
+	end
+	return monitors
+end
+
 --View
-View = { id = "" }
-function View:new(o, monitors, termMon)
+function View:new (o, monitors)
 	o = o or {}
 	setmetatable(o, self)
 	self.__index = self
-	self.monitors = monitors or self:wrapMons()
-	self.termMon = termMon or self:findTerm()
+	self.monitors = monitors or {}
 	return o
 end
 
-function View:wrapMons()
-	devicesList = peripheral.getNames()
-	mons = {}
-	for i, v in pairs(devicesList) do
-		if string.find(v, "monitor") then
-			table.insert(mons, Monitor:new(nil, v))
-			mons[#mons].category = "monitor"
-		end
-	end
-	return mons
-end
-
-function View:findTerm()
-	size = 256
-	termMon = {}
-	for i, v in pairs(self.monitors) do
-		if (v:getSize() < size ) then
-			termMon = v
-		end
-	end
-	return termMon
-end
-
-function View:redirToTerm()
-	term.redirect(self.termMon)
-end
-
 --Do the hardwork
-v = View:new()
-v:redirToTerm()
 print("Try to gather online devices")
 c = Controller:new()
 c:regulate()
