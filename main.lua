@@ -294,13 +294,9 @@ function Controller:regulate()
 		end
 	end
 	if self:getMaintenance() then
-		for i, v in pairs(self.controlledDevices) do
-			if v:getCategory() == "turbine" then
-				v:setActive(false)
-			elseif v:getCategory() == "reactor" then
-				v:setActive(false)
-			end
-		end
+		self:setReactorOnline(false)
+		self:setAllTurbineOnline(false)
+		sleep(5)
 	else
 		if generationCycle then
 			if firstRun then
