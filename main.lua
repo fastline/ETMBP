@@ -380,6 +380,18 @@ function View:new(o, monitors, termMon, reactorMon, turbineMon)
 	return o
 end
 
+function View:setTermMon()
+	size = 1024
+	monObj = {}
+	for i, v in pairs(monitors) do
+		if size > v:getSize() then
+			monObj = v
+			size = v:getSize()
+		end
+	end
+	return monObj
+end
+
 --Do the hardwork
 print("Try to gather online devices")
 c = Controller:new()
