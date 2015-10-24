@@ -356,12 +356,12 @@ end
 
 --View
 View = { id = "" }
-function View:new(o)
+function View:new(o, monitors, termMon)
 	o = o or {}
 	setmetatable(o, self)
 	self.__index = self
-	self.monitors = self:wrapMons()
-	self.termMon = self:findTerm()
+	self.monitors = monitors or self:wrapMons()
+	self.termMon = termMon or self:findTerm()
 	return o
 end
 
