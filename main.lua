@@ -368,15 +368,21 @@ function Controller:getMonitors()
 end
 
 --View
--- function View:new (o, monitors)
-	-- o = o or {}
-	-- setmetatable(o, self)
-	-- self.__index = self
-	-- self.monitors = monitors or {}
-	-- return o
--- end
+View = { id = "" }
+function View:new(o, monitors, termMon, reactorMon, turbineMon)
+	o = o or {}
+	setmetatable(o, self)
+	self.__index = self
+	self.monitors = monitors or {}
+	self.termMon = termMon or {}
+	self.reactorMon = reactorMon or {}
+	self.turbineMon = turbineMon or {}
+	return o
+end
 
 --Do the hardwork
 print("Try to gather online devices")
 c = Controller:new()
+v = View:new(_, c:getMonitors())
 c:regulate()
+
