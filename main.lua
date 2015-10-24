@@ -394,6 +394,7 @@ end
 
 function View:redirectToTerm()
 	term.redirect(self.termMon.obj)
+	self.termMon:reset()
 end
 
 --Do the hardwork
