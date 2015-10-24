@@ -368,13 +368,13 @@ function Controller:getMonitors()
 end
 
 --View
-function View:new (o, monitors)
-	o = o or {}
-	setmetatable(o, self)
-	self.__index = self
-	self.monitors = monitors or {}
-	return o
-end
+-- function View:new (o, monitors)
+	-- o = o or {}
+	-- setmetatable(o, self)
+	-- self.__index = self
+	-- self.monitors = monitors or {}
+	-- return o
+-- end
 
 --Do the hardwork
 print("Try to gather online devices")
