@@ -391,7 +391,7 @@ function View:redirToTerm()
 end
 
 --Do the hardwork
-v = View:new(nil, c:getMonitors())
+v = View:new()
 v:redirToTerm()
 print("Try to gather online devices")
 c = Controller:new()
