@@ -374,6 +374,7 @@ function View:wrapMons()
 			mons[#mons].category = "monitor"
 		end
 	end
+	return mons
 end
 
 function View:findTerm()
