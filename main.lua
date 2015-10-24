@@ -374,7 +374,7 @@ function View:new(o, monitors, termMon, reactorMon, turbineMon)
 	setmetatable(o, self)
 	self.__index = self
 	self.monitors = monitors or {}
-	self.termMon = termMon or {}
+	self.termMon = termMon or self:setTermMon()
 	self.reactorMon = reactorMon or {}
 	self.turbineMon = turbineMon or {}
 	return o
@@ -392,9 +392,14 @@ function View:setTermMon()
 	return monObj
 end
 
+function View:redirectToTerm()
+	term.redirect(self.termMon)
+end
+
 --Do the hardwork
 print("Try to gather online devices")
 c = Controller:new()
 v = View:new(_, c:getMonitors())
+v:redirectToTerm
 c:regulate()
 
