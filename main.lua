@@ -387,7 +387,7 @@ function View:setTermMon()
 	for i, v in pairs(monitors) do
 		_, nusize = v:getSize()
 		if nusize < size then
-			monObj = v
+			monObj = v.obj
 			size = nusize
 		end
 	end
