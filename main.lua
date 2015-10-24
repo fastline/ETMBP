@@ -402,4 +402,4 @@ c = Controller:new()
 v = View:new(_, c:getMonitors())
 v:redirectToTerm
 c:regulate()
-
+print("Valami")
