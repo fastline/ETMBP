@@ -355,6 +355,7 @@ function Controller:listenToPalm()
 end
 
 --View
+View = { id = "" }
 function View:new(o, self)
 	o = o or {}
 	setmetatable(o, self)
