@@ -85,7 +85,7 @@ function Monitor:new(o, id, width, height)
 	self.__index = self
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
-	width, height = width, height or self:getSize()
+	self.width, self.height = width, height or self:getSize()
 	return o
 end
 
@@ -377,8 +377,7 @@ function View:new(o, monitors, termMon, reactorMon, turbineMon)
 	self.termMon = termMon or self:setTermMon()
 	self.reactorMon = reactorMon or {}
 	self.turbineMon = turbineMon or {}
-	print(self.termMon.height)
-	
+	print(self.termMon.height .." ".. self.termMon.width)
 	return o
 end
 
