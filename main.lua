@@ -401,6 +401,7 @@ end
 print("Try to gather online devices")
 c = Controller:new()
 v = View:new(_, c:getMonitors())
+print(v.termMon.category)
 v:redirectToTerm()
 --c:regulate()
 print("Valami")
