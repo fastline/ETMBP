@@ -394,7 +394,7 @@ function View:setTermMon()
 end
 
 function View:redirectToTerm()
-	term.redirect(self.termMon.id)
+	term.redirect(self.termMon.obj)
 	self.termMon:reset()
 end
 
@@ -402,7 +402,7 @@ end
 print("Try to gather online devices")
 c = Controller:new()
 v = View:new(_, c:getMonitors())
-print(v.termMon.category)
+print(v.termMon.id)
 v:redirectToTerm()
 --c:regulate()
 print("Valami")
