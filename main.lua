@@ -378,6 +378,7 @@ function View:new(o, monitors, termMon, reactorMon, turbineMon)
 	self.reactorMon = reactorMon or {}
 	self.turbineMon = turbineMon or {}
 	print(self.termMon.height)
+	
 	return o
 end
 
