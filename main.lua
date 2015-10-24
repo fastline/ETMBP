@@ -393,7 +393,7 @@ function View:setTermMon()
 end
 
 function View:redirectToTerm()
-	term.redirect(self.termMon)
+	term.redirect(self.termMon.obj)
 end
 
 --Do the hardwork
