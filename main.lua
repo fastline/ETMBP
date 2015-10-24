@@ -377,6 +377,7 @@ function View:new(o, monitors, termMon, reactorMon, turbineMon)
 	self.termMon = termMon or self:setTermMon()
 	self.reactorMon = reactorMon or {}
 	self.turbineMon = turbineMon or {}
+	print(self.termMon)
 	return o
 end
 
@@ -401,7 +402,7 @@ end
 print("Try to gather online devices")
 c = Controller:new()
 v = View:new(_, c:getMonitors())
-print(v.termMon.category)
+--print(v.termMon.category)
 v:redirectToTerm()
 --c:regulate()
 print("Valami")
