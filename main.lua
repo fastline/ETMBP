@@ -381,7 +381,7 @@ function View:new(o, monitors, termMon, reactorMon, turbineMon)
 end
 
 function View:setTermMon()
-	size = 1024
+	size = 10240
 	monObj = {}
 	for i, v in pairs(monitors) do
 		if size > v:getSize() then
