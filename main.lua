@@ -21,7 +21,7 @@ function Device:new(o, id, number, obj, category, shortName)
 	self.obj = obj or "N/A"
 	self.category = category or "N/A"
 	self.shortName = shortName or "N/A"
-	return o
+	return self
 end
 
 function Device:getCategory()
