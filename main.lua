@@ -35,6 +35,7 @@ function Reactor:new(o, id)
 	o = o or Device:new(o,id)
 	setmetatable(o, self)
 	self.__index = self
+	print("R ",id)
 	self.obj = peripheral.wrap(id)
 	return o
 end
@@ -90,7 +91,7 @@ function Monitor:new(o, id, width, height)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
-	print(id, self.id)
+	print("M ",id)
 	self.obj = peripheral.wrap(id)
 	self.width, self.height = width, height or self:getSize()
 	return o
@@ -141,6 +142,7 @@ function Turbine:new(o, id)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
+	print("T ",id)
 	self.obj = peripheral.wrap(id)
 	return o
 end
@@ -189,6 +191,7 @@ function Capacitor:new(o, id, blockCount, blockStore)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
+	print("C ",id)
 	self.obj = peripheral.wrap(id)
 	self.blockCount = blockCount or 225
 	self.blockStore = blockStore or 2500000
