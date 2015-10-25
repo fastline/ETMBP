@@ -244,9 +244,10 @@ end
 
 function Controller:wrapAll()
 	devicesList = peripheral.getNames()
-	printArray(devicesList)
+	--printArray(devicesList)
 	controlledDevices = {}
 	for i, v in pairs(devicesList) do
+		print(v)
 		if string.find(v, "-Reactor") then
 			table.insert(controlledDevices, Reactor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "reactor"
@@ -262,7 +263,7 @@ function Controller:wrapAll()
 		end
 	end
 	for i,v in pairs(controlledDevices) do
-		print(i.." "..v.id)
+		--print(i.." "..v.id)
 	end 
 	return controlledDevices
 end
