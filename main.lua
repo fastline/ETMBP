@@ -407,7 +407,7 @@ end
 print("Try to gather online devices")
 c = Controller:new()
 for i, v in pairs(c.controlledDevices) do
-	print(i.." "..v)
+	print(i.." "..v.id)
 end
 v = View:new(_, c:getMonitors())
 print(v.termMon.id)
