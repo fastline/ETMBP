@@ -90,6 +90,7 @@ function Monitor:new(o, id, width, height)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
+	print(id, self.id)
 	self.obj = peripheral.wrap(id)
 	self.width, self.height = width, height or self:getSize()
 	return o
