@@ -11,7 +11,7 @@ function printArray(arr)
 	end
 end
 -- Device class, mother of all
-Device = {}
+Device = {id = "N/A"}
 function Device:new(o, id, number, obj, category, shortName)
 	o = o or {}
 	setmetatable(o, self)
@@ -29,8 +29,8 @@ function Device:getCategory()
 end
 
 --Reactor class from Device
---Reactor = Device:new()
-Reactor = {}
+Reactor = Device:new()
+--Reactor = {}
 function Reactor:new(o, id)
 	o = o or Device:new(o,id)
 	setmetatable(o, self)
