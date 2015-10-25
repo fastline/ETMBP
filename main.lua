@@ -4,6 +4,12 @@ bSide = "bottom"
 wSide = "left"
 mSide = "back"
 
+-- Print array for debug purpose
+function printArray(arr)
+	for i, v in pairs(arr) do
+		print(i.." "..v)
+	end
+end
 -- Device class, mother of all
 Device = {id = ""}
 function Device:new (o, id, number, obj, category, shortName)
@@ -241,6 +247,7 @@ end
 
 function Controller:wrapAll()
 	devicesList = peripheral.getNames()
+	printArray(devicesList)
 	controlledDevices = {}
 	for i, v in pairs(devicesList) do
 		write(v.." ")
