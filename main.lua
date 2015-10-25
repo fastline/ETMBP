@@ -365,6 +365,7 @@ function Controller:getMonitors()
 			table.insert(monitors, v)
 		end
 	end
+	print(monitors)
 	return monitors
 end
 
