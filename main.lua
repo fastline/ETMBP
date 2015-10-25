@@ -249,7 +249,6 @@ function Controller:wrapAll()
 		elseif string.find(v, "Turbine") then
 			table.insert(controlledDevices, Turbine:new(nil, v))
 			controlledDevices[#controlledDevices].category = "turbine"
-			print("t ",v)
 		elseif string.find(v, "capacitor") then
 			table.insert(controlledDevices, Capacitor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "capacitor"
@@ -401,7 +400,7 @@ function View:redirectToTerm()
 	self.termMon:reset()
 end
 
---Do the hardwork
+-- Do the hardwork
 c = Controller:new()
 v = View:new(_, c:getMonitors())
 v:redirectToTerm()
