@@ -247,7 +247,7 @@ function Controller:wrapAll()
 	--printArray(devicesList)
 	controlledDevices = {}
 	k = 0
-	for i, v in pairs(devicesList)
+	for i, v in pairs(devicesList) do
 		if string.find(v, "-Reactor") then 
 			controlledDevices[k] = Reactor:new(nil, v)
 			k = k + 1
