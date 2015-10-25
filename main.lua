@@ -37,7 +37,7 @@ function Reactor:new(o, id)
 	self.__index = self
 	print("R ",id)
 	self.obj = peripheral.wrap(id)
-	return o
+	return self
 end
 
 function Reactor:getConnected() 
@@ -144,7 +144,7 @@ function Turbine:new(o, id)
 	self.__index = self
 	print("T ",id)
 	self.obj = peripheral.wrap(id)
-	return o
+	return self
 end
 
 function Turbine:getConnected()
@@ -195,7 +195,7 @@ function Capacitor:new(o, id, blockCount, blockStore)
 	self.obj = peripheral.wrap(id)
 	self.blockCount = blockCount or 225
 	self.blockStore = blockStore or 2500000
-	return o
+	return self
 end
 
 function Capacitor:getCapacity()
