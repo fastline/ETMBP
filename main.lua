@@ -86,7 +86,7 @@ end
 
 --Monitor class
 --Monitor = Device:new()
-Monitor = {}
+Monitor = Device:new()
 function Monitor:new(o, id, width, height)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
@@ -94,7 +94,7 @@ function Monitor:new(o, id, width, height)
 	print("M ",id)
 	self.obj = peripheral.wrap(id)
 	self.width, self.height = width, height or self:getSize()
-	return self
+	return o
 end
 
 function Monitor:getSize()
