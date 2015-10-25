@@ -84,6 +84,7 @@ end
 
 --Monitor class
 --Monitor = Device:new()
+Monitor = {}
 function Monitor:new(o, id, width, height)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
