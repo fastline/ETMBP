@@ -29,7 +29,7 @@ function Device:getCategory()
 end
 
 --Reactor class from Device
-Reactor = Device:new()
+--Reactor = Device:new()
 function Reactor:new(o, id)
 	o = o or Device:new(o,id)
 	setmetatable(o, self)
@@ -83,7 +83,7 @@ function Reactor:getYelloriumConsumption()
 end
 
 --Monitor class
-Monitor = Device:new()
+--Monitor = Device:new()
 function Monitor:new(o, id, width, height)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
@@ -132,7 +132,7 @@ end
 
 -- Turbine Class
 
-Turbine = Device:new()
+--Turbine = Device:new()
 function Turbine:new(o, id)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
