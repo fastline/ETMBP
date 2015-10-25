@@ -266,7 +266,7 @@ function Controller:wrapAll()
 		end
 	end
 	for i,v in pairs(controlledDevices) do
-		print(i.." "..v.id)
+		print(i," ",v.id)
 	end 
 	return controlledDevices
 end
