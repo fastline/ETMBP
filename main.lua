@@ -239,9 +239,6 @@ function Controller:countTypes()
 		elseif v.category == "reactor" then countByType["reactor"] = countByType["reactor"] + 1
 		elseif v.category == "capacitor" then countByType["capacitor"] = countByType["capacitor"] + 1 end
 	end
-	for i, v in pairs(countByType) do
-		print(i.." "..v)
-	end
 	return countByType
 end
 
@@ -407,10 +404,6 @@ end
 
 --Do the hardwork
 c = Controller:new()
-for i, v in pairs(c.controlledDevices) do
-	print(i.." "..v.id)
-end
 v = View:new(_, c:getMonitors())
 v:redirectToTerm()
 --c:regulate()
-print("Valami")
