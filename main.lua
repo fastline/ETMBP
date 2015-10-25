@@ -361,6 +361,7 @@ function Controller:getMonitors()
 	monitors = {}
 	for i, v in pairs(controlledDevices) do
 		if v:getCategory() == "monitor" then
+			print(v.id)
 			table.insert(monitors, v)
 		end
 	end
@@ -387,7 +388,7 @@ function View:setTermMon()
 	height = 0
 	for i, v in pairs(monitors) do
 		height = v.obj.getSize()
-		print(i.." "..height.." "..size)
+		print(i.." "..height.." "..size.." "..v.id)
 		if height < size then
 			monObj = v
 			size = v.height
