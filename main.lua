@@ -85,7 +85,6 @@ function Reactor:getYelloriumConsumption()
 end
 
 --Monitor class
---Monitor = Device:new()
 Monitor = Device:new()
 function Monitor:new(o, id, width, height)
 	o = o or Device:new(o, id)
