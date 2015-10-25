@@ -135,15 +135,15 @@ end
 
 -- Turbine Class
 
---Turbine = Device:new()
-Turbine = {}
+Turbine = Device:new()
 function Turbine:new(o, id)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
 	print("T ",id)
 	self.obj = peripheral.wrap(id)
-	return self
+	self.obj.getConnected()
+	return o
 end
 
 function Turbine:getConnected()
@@ -184,8 +184,7 @@ function Turbine:setOffline()
 end
 
 --Capacitor class
---Capacitor = Device:new()
-Capacitor = {}
+Capacitor = Device:new()
 function Capacitor:new(o, id, blockCount, blockStore)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
@@ -194,7 +193,7 @@ function Capacitor:new(o, id, blockCount, blockStore)
 	self.obj = peripheral.wrap(id)
 	self.blockCount = blockCount or 225
 	self.blockStore = blockStore or 2500000
-	return self
+	return o
 end
 
 function Capacitor:getCapacity()
