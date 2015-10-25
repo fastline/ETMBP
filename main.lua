@@ -226,8 +226,8 @@ function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minS
 	self.maxStoredPercent = maxStoredPercent or 98
 	self.yelloriumEmitterLevel = yelloriumEmitterLevel or 1000
 	self.controlledDevices = controlledDevices or self:wrapAll()
-	self.countByType = countByType or self:countTypes()
-	self.liveSettings = liveSettings or { maintenanceByLever = false, maintenancebyPalm = false, maintenancebyYelloriumLevel = false, generate = false, forceOnLine = false }
+	--self.countByType = countByType or self:countTypes()
+	--self.liveSettings = liveSettings or { maintenanceByLever = false, maintenancebyPalm = false, maintenancebyYelloriumLevel = false, generate = false, forceOnLine = false }
 	return o
 end
 
@@ -247,7 +247,6 @@ function Controller:wrapAll()
 	printArray(devicesList)
 	controlledDevices = {}
 	for i, v in pairs(devicesList) do
-		write(v.." ")
 		if string.find(v, "-Reactor") then
 			table.insert(controlledDevices, Reactor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "reactor"
@@ -263,6 +262,9 @@ function Controller:wrapAll()
 		end
 	end
 	return controlledDevices
+	for i,v in pairs(controlledDevices) do
+		print(i.." "..v.id)
+	end
 end
 
 function Controller:getCableActive(color)
