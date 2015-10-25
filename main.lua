@@ -369,7 +369,7 @@ end
 function Controller:getMonitors()
 	monitors = {}
 	for i, v in pairs(controlledDevices) do
-		if v:getCategory() == "monitor" then
+		if v.category() == "monitor" then
 			table.insert(monitors, v)
 		end
 	end
