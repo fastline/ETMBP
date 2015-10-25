@@ -30,6 +30,7 @@ end
 
 --Reactor class from Device
 --Reactor = Device:new()
+Reactor = {}
 function Reactor:new(o, id)
 	o = o or Device:new(o,id)
 	setmetatable(o, self)
@@ -134,6 +135,7 @@ end
 -- Turbine Class
 
 --Turbine = Device:new()
+Turbine = {}
 function Turbine:new(o, id)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
@@ -180,7 +182,8 @@ function Turbine:setOffline()
 end
 
 --Capacitor class
-Capacitor = Device:new()
+--Capacitor = Device:new()
+Capacitor = {}
 function Capacitor:new(o, id, blockCount, blockStore)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
