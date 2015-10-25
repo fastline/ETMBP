@@ -246,19 +246,20 @@ function Controller:wrapAll()
 	devicesList = peripheral.getNames()
 	--printArray(devicesList)
 	controlledDevices = {}
-	for i, v in pairs(devicesList) do
-		if string.find(v, "-Reactor") then
-			table.insert(controlledDevices, 1, Reactor:new(nil, v))
-			controlledDevices[#controlledDevices].category = "reactor"
+	k = 0
+	for i, v in pairs(devicesList)
+		if string.find(v, "-Reactor") then 
+			controlledDevices[k] = Reactor:new(nil, v)
+			k = k + 1
 		elseif string.find(v, "Turbine") then
-			table.insert(controlledDevices, 1, Turbine:new(nil, v))
-			--controlledDevices[#controlledDevices].category = "turbine"
+			controlledDevices[k] = Turbine:new(nil, v)
+			k = k + 1
 		elseif string.find(v, "capacitor") then
-			table.insert(controlledDevices, 1, Capacitor:new(nil, v))
-			controlledDevices[#controlledDevices].category = "capacitor"
+			controlledDevices[k] = Capacitor:new(nil, v)
+			k = k + 1
 		elseif string.find(v, "monitor") then
-			table.insert(controlledDevices, 1, Monitor:new(nil, v))
-			--controlledDevices[#controlledDevices].category = "monitor"
+			controlledDevices[k] = Monitor:new(nil, v)
+			k = k + 1
 		end
 	end
 	for i,v in pairs(controlledDevices) do
