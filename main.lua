@@ -261,10 +261,10 @@ function Controller:wrapAll()
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
 	end
-	return controlledDevices
 	for i,v in pairs(controlledDevices) do
 		print(i.." "..v.id)
-	end
+	end 
+	return controlledDevices
 end
 
 function Controller:getCableActive(color)
