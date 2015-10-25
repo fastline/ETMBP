@@ -12,7 +12,7 @@ function printArray(arr)
 end
 -- Device class, mother of all
 Device = {id = ""}
-function Device:new (o, id, number, obj, category, shortName)
+function Device:new(o, id, number, obj, category, shortName)
 	o = o or {}
 	setmetatable(o, self)
 	self.__index = self
@@ -31,10 +31,9 @@ end
 --Reactor class from Device
 Reactor = Device:new()
 function Reactor:new(o, id)
-	o = o or {}
+	o = o or Device:new(o,id)
 	setmetatable(o, self)
 	self.__index = self
-	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
 	return o
 end
@@ -86,10 +85,9 @@ end
 --Monitor class
 Monitor = Device:new()
 function Monitor:new(o, id, width, height)
-	o = o or {}
+	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
-	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
 	self.width, self.height = width, height or self:getSize()
 	return o
@@ -136,10 +134,9 @@ end
 
 Turbine = Device:new()
 function Turbine:new(o, id)
-	o = o or {}
+	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
-	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
 	return o
 end
@@ -184,12 +181,11 @@ end
 --Capacitor class
 Capacitor = Device:new()
 function Capacitor:new(o, id, blockCount, blockStore)
-	o = o or {}
+	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
-	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
-	self.blockCount = blockCount or 51
+	self.blockCount = blockCount or 225
 	self.blockStore = blockStore or 2500000
 	return o
 end
@@ -246,20 +242,19 @@ function Controller:wrapAll()
 	devicesList = peripheral.getNames()
 	--printArray(devicesList)
 	controlledDevices = {}
-	k = 0
 	for i, v in pairs(devicesList) do
-		if string.find(v, "-Reactor") then 
-			controlledDevices[k] = Reactor:new(nil, v)
-			k = k + 1
+		if string.find(v, "-Reactor") then
+			table.insert(controlledDevices, Reactor:new(nil, v))
+			controlledDevices[#controlledDevices].category = "reactor"
 		elseif string.find(v, "Turbine") then
-			controlledDevices[k] = Turbine:new(nil, v)
-			k = k + 1
+			table.insert(controlledDevices, Turbine:new(nil, v))
+			controlledDevices[#controlledDevices].category = "turbine"
 		elseif string.find(v, "capacitor") then
-			controlledDevices[k] = Capacitor:new(nil, v)
-			k = k + 1
+			table.insert(controlledDevices, Capacitor:new(nil, v))
+			controlledDevices[#controlledDevices].category = "capacitor"
 		elseif string.find(v, "monitor") then
-			controlledDevices[k] = Monitor:new(nil, v)
-			k = k + 1
+			table.insert(controlledDevices, Monitor:new(nil, v))
+			controlledDevices[#controlledDevices].category = "monitor"
 		end
 	end
 	for i,v in pairs(controlledDevices) do
