@@ -384,9 +384,11 @@ end
 function View:setTermMon()
 	size = 10240
 	monObj = {}
+	height
 	for i, v in pairs(monitors) do
-		print(i.." "..v.height.." "..size)
-		if v.height < size then
+		height, _ = v.obj.getSize()
+		print(i.." "..height.." "..size)
+		if height < size then
 			monObj = v
 			size = v.height
 		end
