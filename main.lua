@@ -94,7 +94,7 @@ function Monitor:new(o, id, width, height)
 	print("M ",id)
 	self.obj = peripheral.wrap(id)
 	self.width, self.height = width, height or self:getSize()
-	return o
+	return self
 end
 
 function Monitor:getSize()
