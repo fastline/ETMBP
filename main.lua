@@ -257,7 +257,6 @@ function Controller:wrapAll()
 			table.insert(controlledDevices, Monitor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
-		print("Connected")
 	end
 	return controlledDevices
 end
@@ -361,11 +360,9 @@ function Controller:getMonitors()
 	monitors = {}
 	for i, v in pairs(controlledDevices) do
 		if v:getCategory() == "monitor" then
-			print(v.id)
 			table.insert(monitors, v)
 		end
 	end
-	print(monitors)
 	return monitors
 end
 
@@ -379,7 +376,6 @@ function View:new(o, monitors, termMon, reactorMon, turbineMon)
 	self.termMon = termMon or self:setTermMon()
 	self.reactorMon = reactorMon or {}
 	self.turbineMon = turbineMon or {}
-	print(self.termMon.height)
 	return o
 end
 
@@ -389,7 +385,6 @@ function View:setTermMon()
 	height = 0
 	for i, v in pairs(monitors) do
 		height = v.obj.getSize()
-		print(i.." "..height.." "..size.." "..v.id)
 		if height < size then
 			monObj = v
 			size = v.height
@@ -404,13 +399,11 @@ function View:redirectToTerm()
 end
 
 --Do the hardwork
-print("Try to gather online devices")
 c = Controller:new()
 for i, v in pairs(c.controlledDevices) do
 	print(i.." "..v.id)
 end
 v = View:new(_, c:getMonitors())
-print(v.termMon.id)
 v:redirectToTerm()
 --c:regulate()
 print("Valami")
