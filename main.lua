@@ -240,7 +240,7 @@ end
 
 function Controller:wrapAll()
 	devicesList = peripheral.getNames()
-	--printArray(devicesList)
+	printArray(devicesList)
 	controlledDevices = {}
 	for i, v in pairs(devicesList) do
 		if string.find(v, "-Reactor") then
