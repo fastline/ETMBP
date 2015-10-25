@@ -386,7 +386,7 @@ function View:setTermMon()
 	monObj = {}
 	height
 	for i, v in pairs(monitors) do
-		height, _ = v.obj.getSize()
+		height = v.obj.getSize()
 		print(i.." "..height.." "..size)
 		if height < size then
 			monObj = v
