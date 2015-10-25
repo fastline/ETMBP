@@ -11,7 +11,7 @@ function printArray(arr)
 	end
 end
 -- Device class, mother of all
-Device = {id = ""}
+Device = {}
 function Device:new(o, id, number, obj, category, shortName)
 	o = o or {}
 	setmetatable(o, self)
@@ -21,7 +21,7 @@ function Device:new(o, id, number, obj, category, shortName)
 	self.obj = obj or "N/A"
 	self.category = category or "N/A"
 	self.shortName = shortName or "N/A"
-	return self
+	return o
 end
 
 function Device:getCategory()
@@ -37,7 +37,7 @@ function Reactor:new(o, id)
 	self.__index = self
 	print("R ",id)
 	self.obj = peripheral.wrap(id)
-	return self
+	return o
 end
 
 function Reactor:getConnected() 
