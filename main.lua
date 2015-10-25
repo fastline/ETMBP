@@ -35,7 +35,7 @@ function Reactor:new(o, id)
 	o = o or Device:new(o,id)
 	setmetatable(o, self)
 	self.__index = self
-	self.obj = peripheral.wrap(self.id)
+	self.obj = peripheral.wrap(id)
 	return o
 end
 
@@ -141,7 +141,7 @@ function Turbine:new(o, id)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
-	self.obj = peripheral.wrap(self.id)
+	self.obj = peripheral.wrap(id)
 	return o
 end
 
@@ -189,7 +189,7 @@ function Capacitor:new(o, id, blockCount, blockStore)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
-	self.obj = peripheral.wrap(self.id)
+	self.obj = peripheral.wrap(id)
 	self.blockCount = blockCount or 225
 	self.blockStore = blockStore or 2500000
 	return o
