@@ -385,10 +385,10 @@ function View:setTermMon()
 	size = 10240
 	monObj = {}
 	for i, v in pairs(monitors) do
-		nusize = v:getSize()
-		if nusize < size then
+		print(i.." "..v.height.." "..size)
+		if v.height < size then
 			monObj = v
-			size = nusize
+			size = v.height
 		end
 	end
 	return monObj
