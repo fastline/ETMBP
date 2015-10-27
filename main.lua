@@ -294,7 +294,7 @@ function Controller:wrapAll()
 		--print("ID: ", controlledDevices[#controlledDevices].id)
 		--print("Cat:"..controlledDevices[#controlledDevices].category)
 		if ((#controlledDevices) > 1 ) then
-			--print("elotte: ",tostring(controlledDevices[#controlledDevices - 1 ].id))
+			print("elso elem: ",tostring(controlledDevices[1].id))
 		end
 	end
 	debugTable(testTable)
