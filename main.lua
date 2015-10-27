@@ -297,7 +297,7 @@ function Controller:wrapAll()
 			print("elso elem: ",tostring(controlledDevices[1].id))
 		end
 	end
-	--debugTable(testTable)
+	debugTable(controlledDevices)
 	--print(tostring(controlledDevices[2].id))
 	
 	return controlledDevices
@@ -442,7 +442,7 @@ end
 
 function debugTable(tableObj)
 	for i, obj in pairs(tableObj) do
-		print(i," ",obj.id)
+		print(obj)
 	end 
 end
 
