@@ -13,15 +13,15 @@ end
 -- Device class, mother of all
 Device = {id = "N/A"}
 function Device:new(o, id, number, obj, category, shortName)
-	o = o or {}
-	setmetatable(o, self)
+	ob = o or {}
+	setmetatable(ob, self)
 	self.__index = self
 	self.id = id or "N/A"
 	self.number = number or "N/A"
 	self.obj = obj or "N/A"
 	self.category = category or "N/A"
 	self.shortName = shortName or "N/A"
-	return o
+	return ob
 end
 
 function Device:getCategory()
@@ -32,12 +32,12 @@ end
 Reactor = Device:new()
 --Reactor = {}
 function Reactor:new(o, id)
-	o = o or Device:new(o,id)
-	setmetatable(o, self)
+	ob = o or Device:new(o,id)
+	setmetatable(ob, self)
 	self.__index = self
 	--print("R ",id)
 	self.obj = peripheral.wrap(id)
-	return o
+	return ob
 end
 
 function Reactor:getConnected() 
@@ -87,13 +87,13 @@ end
 --Monitor class
 Monitor = Device:new()
 function Monitor:new(o, id, width, height)
-	o = o or Device:new(o, id)
-	setmetatable(o, self)
+	ob = o or Device:new(o, id)
+	setmetatable(ob, self)
 	self.__index = self
 	--print("M ",id)
 	self.obj = peripheral.wrap(id)
 	self.width, self.height = width, height or self:getSize()
-	return o
+	return ob
 end
 
 function Monitor:getSize()
@@ -137,13 +137,13 @@ end
 
 Turbine = Device:new()
 function Turbine:new(o, id)
-	o = o or Device:new(o, id)
-	setmetatable(o, self)
+	ob = o or Device:new(o, id)
+	setmetatable(ob, self)
 	self.__index = self
 	--print("T ",id)
 	self.obj = peripheral.wrap(id)
 	self.obj.getConnected()
-	return o
+	return ob
 end
 
 function Turbine:getConnected()
@@ -186,14 +186,14 @@ end
 --Capacitor class
 Capacitor = Device:new()
 function Capacitor:new(o, id, blockCount, blockStore)
-	o = o or Device:new(o, id)
-	setmetatable(o, self)
+	ob = o or Device:new(o, id)
+	setmetatable(ob, self)
 	self.__index = self
 	--print("C ",id)
 	self.obj = peripheral.wrap(id)
 	self.blockCount = blockCount or 225
 	self.blockStore = blockStore or 2500000
-	return o
+	return ob
 end
 
 function Capacitor:getCapacity()
@@ -217,8 +217,8 @@ end
 --Controller class with some Vytutas mineral water
 Controller = { id = "" }
 function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minStoredPercent, maxStoredPercent, yelloriumEmitterLevel, controlledDevices, countByType, liveSettings)
-	o = o or {}
-	setmetatable(o, self)
+	ob = o or {}
+	setmetatable(ob, self)
 	self.__index = self
 	self.optimalRPM = optimalRPM or 1870
 	self.optimalRodPercent = optimalRodPercent or 40
@@ -230,7 +230,7 @@ function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minS
 	self.controlledDevices = controlledDevices or self:wrapAll()
 	--self.countByType = countByType or self:countTypes()
 	--self.liveSettings = liveSettings or { maintenanceByLever = false, maintenancebyPalm = false, maintenancebyYelloriumLevel = false, generate = false, forceOnLine = false }
-	return o
+	return ob
 end
 
 function Controller:countTypes()
@@ -411,14 +411,14 @@ end
 --View
 View = { id = "" }
 function View:new(o, monitors, termMon, reactorMon, turbineMon)
-	o = o or {}
+	ob = o or {}
 	setmetatable(o, self)
 	self.__index = self
 	self.monitors = monitors or {}
 	self.termMon = termMon or self:setTermMon()
 	self.reactorMon = reactorMon or {}
 	self.turbineMon = turbineMon or {}
-	return o
+	return ob
 end
 
 function View:setTermMon()
@@ -442,7 +442,7 @@ end
 
 function debugTable(tableObj)
 	for i, obj in pairs(tableObj) do
-		print(obj)
+		print('i:'..obj.id)
 	end 
 end
 
