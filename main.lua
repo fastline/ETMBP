@@ -13,8 +13,8 @@ end
 -- Device class, mother of all
 Device = {id = "N/A"}
 function Device:new(o, id, number, obj, category, shortName)
-	o = o or {}
-	setmetatable(o, self)
+	ob = o or {}
+	setmetatable(ob, self)
 	self.__index = self
 	self.id = id or "N/A"
 	self.number = number or "N/A"
@@ -32,8 +32,8 @@ end
 Reactor = Device:new()
 --Reactor = {}
 function Reactor:new(o, id)
-	o = o or Device:new(o,id)
-	setmetatable(o, self)
+	ob = o or Device:new(nil,id)
+	setmetatable(ob, self)
 	self.__index = self
 	--print("R ",id)
 	self.obj = peripheral.wrap(id)
@@ -87,8 +87,8 @@ end
 --Monitor class
 Monitor = Device:new()
 function Monitor:new(o, id, width, height)
-	o = o or Device:new(o, id)
-	setmetatable(o, self)
+	ob = o or Device:new(nil, id)
+	setmetatable(ob, self)
 	self.__index = self
 	--print("M ",id)
 	self.obj = peripheral.wrap(id)
@@ -137,8 +137,8 @@ end
 
 Turbine = Device:new()
 function Turbine:new(o, id)
-	o = o or Device:new(o, id)
-	setmetatable(o, self)
+	ob = o or Device:new(nil, id)
+	setmetatable(ob, self)
 	self.__index = self
 	--print("T ",id)
 	self.obj = peripheral.wrap(id)
@@ -186,8 +186,8 @@ end
 --Capacitor class
 Capacitor = Device:new()
 function Capacitor:new(o, id, blockCount, blockStore)
-	o = o or Device:new(o, id)
-	setmetatable(o, self)
+	ob = o or Device:new(nil, id)
+	setmetatable(ob, self)
 	self.__index = self
 	--print("C ",id)
 	self.obj = peripheral.wrap(id)
@@ -217,8 +217,8 @@ end
 --Controller class with some Vytutas mineral water
 Controller = { id = "" }
 function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minStoredPercent, maxStoredPercent, yelloriumEmitterLevel, controlledDevices, countByType, liveSettings)
-	o = o or {}
-	setmetatable(o, self)
+	ob = o or {}
+	setmetatable(ob, self)
 	self.__index = self
 	self.optimalRPM = optimalRPM or 1870
 	self.optimalRodPercent = optimalRodPercent or 40
@@ -411,8 +411,8 @@ end
 --View
 View = { id = "" }
 function View:new(o, monitors, termMon, reactorMon, turbineMon)
-	o = o or {}
-	setmetatable(o, self)
+	ob = o or {}
+	setmetatable(ob, self)
 	self.__index = self
 	self.monitors = monitors or {}
 	self.termMon = termMon or self:setTermMon()
