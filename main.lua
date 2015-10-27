@@ -248,7 +248,6 @@ function Controller:wrapAll()
 	devicesList = peripheral.getNames()
 	printArray(devicesList)
 	controlledDevices = {}
-	controlledDevices[1]="lófasz a picsádba"
 	for i, v in pairs(devicesList) do
 		print("0 ", tostring(#controlledDevices))
 		if string.find(v, "-Reactor") then
@@ -276,7 +275,7 @@ function Controller:wrapAll()
 		--print("ID: ", controlledDevices[#controlledDevices].id)
 		--print("Cat:"..controlledDevices[#controlledDevices].category)
 	end
-	debugTable(controlledDevices)
+	--debugTable(controlledDevices)
 	
 	return controlledDevices
 end
