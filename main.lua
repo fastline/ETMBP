@@ -35,7 +35,7 @@ function Reactor:new(o, id)
 	o = o or Device:new(o,id)
 	setmetatable(o, self)
 	self.__index = self
-	print("R ",id)
+	--print("R ",id)
 	self.obj = peripheral.wrap(id)
 	return o
 end
@@ -90,7 +90,7 @@ function Monitor:new(o, id, width, height)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
-	print("M ",id)
+	--print("M ",id)
 	self.obj = peripheral.wrap(id)
 	self.width, self.height = width, height or self:getSize()
 	return o
@@ -140,7 +140,7 @@ function Turbine:new(o, id)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
-	print("T ",id)
+	--print("T ",id)
 	self.obj = peripheral.wrap(id)
 	self.obj.getConnected()
 	return o
@@ -189,7 +189,7 @@ function Capacitor:new(o, id, blockCount, blockStore)
 	o = o or Device:new(o, id)
 	setmetatable(o, self)
 	self.__index = self
-	print("C ",id)
+	--print("C ",id)
 	self.obj = peripheral.wrap(id)
 	self.blockCount = blockCount or 225
 	self.blockStore = blockStore or 2500000
@@ -249,7 +249,7 @@ function Controller:wrapAll()
 	printArray(devicesList)
 	controlledDevices = {}
 	for i, v in pairs(devicesList) do
-		print("0 ", tostring(#controlledDevices))
+		--print("0 ", tostring(#controlledDevices))
 		if string.find(v, "-Reactor") then
 			dObj = Reactor:new(nil, v)
 			print(dObj.id)
@@ -271,11 +271,12 @@ function Controller:wrapAll()
 			table.insert(controlledDevices, dObj)
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
-		print("1 ", tostring(#controlledDevices))
+		--print("1 ", tostring(#controlledDevices))
 		--print("ID: ", controlledDevices[#controlledDevices].id)
 		--print("Cat:"..controlledDevices[#controlledDevices].category)
 	end
 	--debugTable(controlledDevices)
+	print(tostring(controlledDevices[2].id))
 	
 	return controlledDevices
 end
