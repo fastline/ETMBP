@@ -246,9 +246,21 @@ end
 
 function Controller:wrapAll()
 	devicesList = peripheral.getNames()
-	printArray(devicesList)
-	controlledDevices = {}
+	filteredDevices = {}
 	for i, v in pairs(devicesList) do
+		if string.find(v, "-Reactor") then
+			table.insert(filteredDevices, v)
+		elseif string.find(v, "Turbine") then
+			table.insert(filteredDevices, v)
+		elseif string.find(v, "capacitor") then
+			table.insert(filteredDevices, v)
+		elseif string.find(v, "monitor") then
+			table.insert(filteredDevices, v)
+		end
+	end
+	printArray(filteredDevices)
+	controlledDevices = {}
+	for i, v in pairs(filteredDevices) do
 		--print("0 ", tostring(#controlledDevices))
 		if string.find(v, "-Reactor") then
 			dObj = Reactor:new(nil, v)
@@ -275,7 +287,7 @@ function Controller:wrapAll()
 		--print("ID: ", controlledDevices[#controlledDevices].id)
 		--print("Cat:"..controlledDevices[#controlledDevices].category)
 		if ((#controlledDevices) > 1 ) then
-			print("elotte: ",tostring(controlledDevices[#controlledDevices - 1 ].id))
+			--print("elotte: ",tostring(controlledDevices[#controlledDevices - 1 ].id))
 		end
 	end
 	--debugTable(controlledDevices)
