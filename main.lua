@@ -21,7 +21,7 @@ function Device:new(o, id, number, obj, category, shortName)
 	self.obj = obj or "N/A"
 	self.category = category or "N/A"
 	self.shortName = shortName or "N/A"
-	return o
+	return self
 end
 
 function Device:getCategory()
@@ -37,7 +37,7 @@ function Reactor:new(o, id)
 	self.__index = self
 	--print("R ",id)
 	self.obj = peripheral.wrap(id)
-	return o
+	return self
 end
 
 function Reactor:getConnected() 
@@ -93,7 +93,7 @@ function Monitor:new(o, id, width, height)
 	--print("M ",id)
 	self.obj = peripheral.wrap(id)
 	self.width, self.height = width, height or self:getSize()
-	return o
+	return self
 end
 
 function Monitor:getSize()
@@ -143,7 +143,7 @@ function Turbine:new(o, id)
 	--print("T ",id)
 	self.obj = peripheral.wrap(id)
 	self.obj.getConnected()
-	return o
+	return self
 end
 
 function Turbine:getConnected()
@@ -193,7 +193,7 @@ function Capacitor:new(o, id, blockCount, blockStore)
 	self.obj = peripheral.wrap(id)
 	self.blockCount = blockCount or 225
 	self.blockStore = blockStore or 2500000
-	return o
+	return self
 end
 
 function Capacitor:getCapacity()
@@ -230,7 +230,7 @@ function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minS
 	self.controlledDevices = controlledDevices or self:wrapAll()
 	--self.countByType = countByType or self:countTypes()
 	--self.liveSettings = liveSettings or { maintenanceByLever = false, maintenancebyPalm = false, maintenancebyYelloriumLevel = false, generate = false, forceOnLine = false }
-	return o
+	return self
 end
 
 function Controller:countTypes()
@@ -418,7 +418,7 @@ function View:new(o, monitors, termMon, reactorMon, turbineMon)
 	self.termMon = termMon or self:setTermMon()
 	self.reactorMon = reactorMon or {}
 	self.turbineMon = turbineMon or {}
-	return o
+	return self
 end
 
 function View:setTermMon()
