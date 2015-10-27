@@ -263,7 +263,7 @@ function Controller:wrapAll()
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
 		--print("ID: ", controlledDevices[#controlledDevices].id)
-		print("Cat:", controlledDevices[#controlledDevices].category)
+		--print("Cat:"..controlledDevices[#controlledDevices].category)
 	end
 	debugTable(controlledDevices)
 	
