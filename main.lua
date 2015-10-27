@@ -250,6 +250,9 @@ function Controller:wrapAll()
 	controlledDevices = {}
 	for i, v in pairs(devicesList) do
 		--print("0 ", tostring(#controlledDevices))
+		if (#controlledDevices) > 1 then
+			print(tostring(controlledDevices[#controlledDevices - 1 ])
+		end
 		if string.find(v, "-Reactor") then
 			dObj = Reactor:new(nil, v)
 			table.insert(controlledDevices, dObj)
