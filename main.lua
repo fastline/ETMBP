@@ -248,6 +248,7 @@ function Controller:wrapAll()
 	devicesList = peripheral.getNames()
 	printArray(devicesList)
 	controlledDevices = {}
+	controlledDevices[1]="lófasz a picsádba"
 	for i, v in pairs(devicesList) do
 		if string.find(v, "-Reactor") then
 			dObj = Reactor:new(nil, v)
