@@ -267,8 +267,10 @@ function Controller:wrapAll()
 			table.insert(controlledDevices, dObj)
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
-		print(dObj.id)
-		print(dObj.category)
+		if dObj then
+			print(dObj.id)
+			print(dObj.category)
+		end
 		--print("1 ", tostring(#controlledDevices))
 		--print("ID: ", controlledDevices[#controlledDevices].id)
 		--print("Cat:"..controlledDevices[#controlledDevices].category)
