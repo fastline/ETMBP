@@ -263,7 +263,7 @@ function Controller:wrapAll()
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
 	end
-	for i,v in pairs(controlledDevices) do
+	for i, v in pairs(controlledDevices) do
 		print(i," ",v.id)
 	end 
 	return controlledDevices
