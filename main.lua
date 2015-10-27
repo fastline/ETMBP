@@ -262,8 +262,8 @@ function Controller:wrapAll()
 			table.insert(controlledDevices, Monitor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
-		print('ID:',controlledDevices[#controlledDevices].id)
-		print('Cat:',controlledDevices[#controlledDevices].category)
+		print("ID: ", controlledDevices[#controlledDevices].id)
+		print("Cat:", controlledDevices[#controlledDevices].category)
 	end
 	debugTable(controlledDevices)
 	
