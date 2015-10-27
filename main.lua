@@ -250,6 +250,7 @@ function Controller:wrapAll()
 	controlledDevices = {}
 	controlledDevices[1]="lófasz a picsádba"
 	for i, v in pairs(devicesList) do
+		print("0 ", tostring(#controlledDevices)
 		if string.find(v, "-Reactor") then
 			dObj = Reactor:new(nil, v)
 			print(dObj.id)
@@ -271,6 +272,7 @@ function Controller:wrapAll()
 			table.insert(controlledDevices, dObj)
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
+		print("1 ", tostring(#controlledDevices)
 		--print("ID: ", controlledDevices[#controlledDevices].id)
 		--print("Cat:"..controlledDevices[#controlledDevices].category)
 	end
