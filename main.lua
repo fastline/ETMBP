@@ -262,10 +262,10 @@ function Controller:wrapAll()
 			table.insert(controlledDevices, Monitor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
+		controlledDevices({[1]=v})
 	end
-	for i, v in pairs(controlledDevices) do
-		print(i," ",v.id)
-	end 
+	debugTable(controlledDevices)
+	
 	return controlledDevices
 end
 
@@ -405,6 +405,12 @@ function View:redirectToTerm()
 	term.redirect(self.termMon.obj)
 	self.termMon:reset()
 end
+
+function debugTable(tableObj){
+	for i, obj in pairs(tableObj) do
+		print(i," ",obj.id)
+	end 
+}
 
 -- Do the hardwork
 c = Controller:new()
