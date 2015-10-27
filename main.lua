@@ -290,8 +290,8 @@ function Controller:wrapAll()
 			--print("elotte: ",tostring(controlledDevices[#controlledDevices - 1 ].id))
 		end
 	end
-	--debugTable(controlledDevices)
-	print(tostring(controlledDevices[2].id))
+	debugTable(controlledDevices)
+	--print(tostring(controlledDevices[2].id))
 	
 	return controlledDevices
 end
