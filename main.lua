@@ -297,7 +297,7 @@ function Controller:wrapAll()
 			print("elso elem: ",tostring(controlledDevices[1].id))
 		end
 	end
-	debugTable(testTable)
+	--debugTable(testTable)
 	--print(tostring(controlledDevices[2].id))
 	
 	return controlledDevices
