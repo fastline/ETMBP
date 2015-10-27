@@ -406,11 +406,11 @@ function View:redirectToTerm()
 	self.termMon:reset()
 end
 
-function debugTable(tableObj){
+function debugTable(tableObj)
 	for i, obj in pairs(tableObj) do
 		print(i," ",obj.id)
 	end 
-}
+end
 
 -- Do the hardwork
 c = Controller:new()
