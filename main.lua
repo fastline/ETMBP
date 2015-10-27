@@ -262,7 +262,7 @@ function Controller:wrapAll()
 		end
 		j = j+1
 	end
-	printArray(filteredDevices)
+	--printArray(filteredDevices)
 	controlledDevices = {}
 	j=1
 	for i, v in pairs(filteredDevices) do
@@ -294,7 +294,7 @@ function Controller:wrapAll()
 		--print("ID: ", controlledDevices[#controlledDevices].id)
 		--print("Cat:"..controlledDevices[#controlledDevices].category)
 		if ((#controlledDevices) > 1 ) then
-			print("elso elem: ",tostring(controlledDevices[1].id))
+			--print("elso elem: ",tostring(controlledDevices[1].id))
 		end
 	end
 	debugTable(controlledDevices)
@@ -442,7 +442,7 @@ end
 
 function debugTable(tableObj)
 	for i, obj in pairs(tableObj) do
-		print('i:'..obj.id)
+		print(i..":"..obj.id)
 	end 
 end
 
