@@ -250,16 +250,24 @@ function Controller:wrapAll()
 	controlledDevices = {}
 	for i, v in pairs(devicesList) do
 		if string.find(v, "-Reactor") then
-			table.insert(controlledDevices, Reactor:new(nil, v))
+			dObj = Reactor:new(nil, v)
+			print(dObj)
+			table.insert(controlledDevices, dObj)
 			controlledDevices[#controlledDevices].category = "reactor"
 		elseif string.find(v, "Turbine") then
-			table.insert(controlledDevices, Turbine:new(nil, v))
+			dObj = Turbine:new(nil, v)
+			print(dObj)
+			table.insert(controlledDevices, dObj)
 			controlledDevices[#controlledDevices].category = "turbine"
 		elseif string.find(v, "capacitor") then
-			table.insert(controlledDevices, Capacitor:new(nil, v))
+			dObj = Capacitor:new(nil, v)
+			print(dObj)
+			table.insert(controlledDevices, dObj)
 			controlledDevices[#controlledDevices].category = "capacitor"
 		elseif string.find(v, "monitor") then
-			table.insert(controlledDevices, Monitor:new(nil, v))
+			dObj = Monitor:new(nil, v)
+			print(dObj)
+			table.insert(controlledDevices, dObj)
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
 		--print("ID: ", controlledDevices[#controlledDevices].id)
