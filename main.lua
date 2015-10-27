@@ -251,7 +251,7 @@ function Controller:wrapAll()
 	for i, v in pairs(devicesList) do
 		--print("0 ", tostring(#controlledDevices))
 		if (#controlledDevices) > 1 then
-			print("elotte: "tostring(controlledDevices[#controlledDevices - 1 ].id))
+			print("elotte: ",tostring(controlledDevices[#controlledDevices - 1 ].id))
 		end
 		if string.find(v, "-Reactor") then
 			dObj = Reactor:new(nil, v)
