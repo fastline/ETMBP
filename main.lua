@@ -262,7 +262,7 @@ function Controller:wrapAll()
 			table.insert(controlledDevices, Monitor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
-		controlledDevices({[1]=v})
+		debugTable({[1]=v})
 	end
 	debugTable(controlledDevices)
 	
