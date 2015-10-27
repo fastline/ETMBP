@@ -251,16 +251,16 @@ function Controller:wrapAll()
 	for i, v in pairs(devicesList) do
 		if string.find(v, "-Reactor") then
 			table.insert(controlledDevices, Reactor:new(nil, v))
-			controlledDevices[#controlledDevices].category = "reactor"
+			controlledDevices[#controlledDevices+1].category = "reactor"
 		elseif string.find(v, "Turbine") then
 			table.insert(controlledDevices, Turbine:new(nil, v))
-			controlledDevices[#controlledDevices].category = "turbine"
+			controlledDevices[#controlledDevices+1].category = "turbine"
 		elseif string.find(v, "capacitor") then
 			table.insert(controlledDevices, Capacitor:new(nil, v))
-			controlledDevices[#controlledDevices].category = "capacitor"
+			controlledDevices[#controlledDevices+1].category = "capacitor"
 		elseif string.find(v, "monitor") then
 			table.insert(controlledDevices, Monitor:new(nil, v))
-			controlledDevices[#controlledDevices].category = "monitor"
+			controlledDevices[#controlledDevices+1].category = "monitor"
 		end
 		print('ID:',controlledDevices[#controlledDevices].id)
 	end
