@@ -4,24 +4,18 @@ bSide = "bottom"
 wSide = "left"
 mSide = "back"
 
--- Print array for debug purpose
-function printArray(arr)
-	for i, v in pairs(arr) do
-		print(i.." "..v)
-	end
-end
 -- Device class, mother of all
-Device = {id = "N/A"}
-function Device:new(o, id, number, obj, category, shortName)
-	ob = o or {}
-	setmetatable(ob, self)
+Device = {id = ""}
+function Device:new (o, id, number, obj, category, shortName)
+	o = o or {}
+	setmetatable(o, self)
 	self.__index = self
 	self.id = id or "N/A"
 	self.number = number or "N/A"
 	self.obj = obj or "N/A"
 	self.category = category or "N/A"
 	self.shortName = shortName or "N/A"
-	return ob
+	return o
 end
 
 function Device:getCategory()
@@ -30,14 +24,13 @@ end
 
 --Reactor class from Device
 Reactor = Device:new()
---Reactor = {}
 function Reactor:new(o, id)
-	ob = o or Device:new(o,id)
-	setmetatable(ob, self)
+	o = o or {}
+	setmetatable(o, self)
 	self.__index = self
-	--print("R ",id)
-	self.obj = peripheral.wrap(id)
-	return ob
+	self.id = id or "N/A"
+	self.obj = peripheral.wrap(self.id)
+	return o
 end
 
 function Reactor:getConnected() 
@@ -87,13 +80,13 @@ end
 --Monitor class
 Monitor = Device:new()
 function Monitor:new(o, id, width, height)
-	ob = o or Device:new(o, id)
-	setmetatable(ob, self)
+	o = o or {}
+	setmetatable(o, self)
 	self.__index = self
-	--print("M ",id)
-	self.obj = peripheral.wrap(id)
+	self.id = id or "N/A"
+	self.obj = peripheral.wrap(self.id)
 	self.width, self.height = width, height or self:getSize()
-	return ob
+	return o
 end
 
 function Monitor:getSize()
@@ -137,13 +130,12 @@ end
 
 Turbine = Device:new()
 function Turbine:new(o, id)
-	ob = o or Device:new(o, id)
-	setmetatable(ob, self)
+	o = o or {}
+	setmetatable(o, self)
 	self.__index = self
-	--print("T ",id)
-	self.obj = peripheral.wrap(id)
-	self.obj.getConnected()
-	return ob
+	self.id = id or "N/A"
+	self.obj = peripheral.wrap(self.id)
+	return o
 end
 
 function Turbine:getConnected()
@@ -186,14 +178,14 @@ end
 --Capacitor class
 Capacitor = Device:new()
 function Capacitor:new(o, id, blockCount, blockStore)
-	ob = o or Device:new(o, id)
-	setmetatable(ob, self)
+	o = o or {}
+	setmetatable(o, self)
 	self.__index = self
-	--print("C ",id)
-	self.obj = peripheral.wrap(id)
-	self.blockCount = blockCount or 225
+	self.id = id or "N/A"
+	self.obj = peripheral.wrap(self.id)
+	self.blockCount = blockCount or 51
 	self.blockStore = blockStore or 2500000
-	return ob
+	return o
 end
 
 function Capacitor:getCapacity()
@@ -217,8 +209,8 @@ end
 --Controller class with some Vytutas mineral water
 Controller = { id = "" }
 function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minStoredPercent, maxStoredPercent, yelloriumEmitterLevel, controlledDevices, countByType, liveSettings)
-	ob = o or {}
-	setmetatable(ob, self)
+	o = o or {}
+	setmetatable(o, self)
 	self.__index = self
 	self.optimalRPM = optimalRPM or 1870
 	self.optimalRodPercent = optimalRodPercent or 40
@@ -228,9 +220,9 @@ function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minS
 	self.maxStoredPercent = maxStoredPercent or 98
 	self.yelloriumEmitterLevel = yelloriumEmitterLevel or 1000
 	self.controlledDevices = controlledDevices or self:wrapAll()
-	--self.countByType = countByType or self:countTypes()
-	--self.liveSettings = liveSettings or { maintenanceByLever = false, maintenancebyPalm = false, maintenancebyYelloriumLevel = false, generate = false, forceOnLine = false }
-	return ob
+	self.countByType = countByType or self:countTypes()
+	self.liveSettings = liveSettings or { maintenanceByLever = false, maintenancebyPalm = false, maintenancebyYelloriumLevel = false, generate = false, forceOnLine = false }
+	return o
 end
 
 function Controller:countTypes()
@@ -241,65 +233,33 @@ function Controller:countTypes()
 		elseif v.category == "reactor" then countByType["reactor"] = countByType["reactor"] + 1
 		elseif v.category == "capacitor" then countByType["capacitor"] = countByType["capacitor"] + 1 end
 	end
+	for i, v in pairs(countByType) do
+		print(i.." "..v)
+	end
 	return countByType
 end
 
 function Controller:wrapAll()
 	devicesList = peripheral.getNames()
-	filteredDevices = {}
-	testTable = {}
-	j=1
-	for i, v in pairs(devicesList) do
-		testTable[j] = Device:new()
-		if string.find(v, "-Reactor") then
-			table.insert(filteredDevices, v)
-		elseif string.find(v, "Turbine") then
-			table.insert(filteredDevices, v)
-		elseif string.find(v, "capacitor") then
-			table.insert(filteredDevices, v)
-		elseif string.find(v, "monitor") then
-			table.insert(filteredDevices, v)
-		end
-		j = j+1
-	end
-	--printArray(filteredDevices)
 	controlledDevices = {}
-	j=1
-	for i, v in pairs(filteredDevices) do
-		--print("0 ", tostring(#controlledDevices))
+	for i, v in pairs(devicesList) do
+		write(v.." ")
+		--Digsite
 		if string.find(v, "-Reactor") then
-			dObj = Reactor:new(nil, v)
-			table.insert(controlledDevices, dObj)
+			table.insert(controlledDevices, Reactor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "reactor"
 		elseif string.find(v, "Turbine") then
-			dObj = Turbine:new(nil, v)
-			table.insert(controlledDevices, dObj)
+			table.insert(controlledDevices, Turbine:new(nil, v))
 			controlledDevices[#controlledDevices].category = "turbine"
 		elseif string.find(v, "capacitor") then
-			dObj = Capacitor:new(nil, v)
-			table.insert(controlledDevices, dObj)
+			table.insert(controlledDevices, Capacitor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "capacitor"
 		elseif string.find(v, "monitor") then
-			dObj = Monitor:new(nil, v)
-			table.insert(controlledDevices, dObj)
+			table.insert(controlledDevices, Monitor:new(nil, v))
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
-		if dObj then
-			testTable[j] = dObj
-			--print(dObj.id)
-			--print(dObj.category)
-			j=j+1
-		end
-		--print("1 ", tostring(#controlledDevices))
-		--print("ID: ", controlledDevices[#controlledDevices].id)
-		--print("Cat:"..controlledDevices[#controlledDevices].category)
-		if ((#controlledDevices) > 1 ) then
-			--print("elso elem: ",tostring(controlledDevices[1].id))
-		end
+		print("Connected")
 	end
-	debugTable(controlledDevices)
-	--print(tostring(controlledDevices[2].id))
-	
 	return controlledDevices
 end
 
@@ -409,45 +369,33 @@ function Controller:getMonitors()
 end
 
 --View
-View = { id = "" }
-function View:new(o, monitors, termMon, reactorMon, turbineMon)
-	ob = o or {}
+function View:new (o, monitors)
+	o = o or {}
 	setmetatable(o, self)
 	self.__index = self
 	self.monitors = monitors or {}
-	self.termMon = termMon or self:setTermMon()
-	self.reactorMon = reactorMon or {}
-	self.turbineMon = turbineMon or {}
-	return ob
+	self.termMon = self:findTerm()
+	return o
 end
 
-function View:setTermMon()
-	size = 10240
-	monObj = {}
-	height = 0
-	for i, v in pairs(monitors) do
-		height = v.obj.getSize()
-		if height < size then
-			monObj = v
-			size = v.height
+function View:findTerm()
+	size = 256
+	termMon = {}
+	for i, v in pairs(self.monitors) do
+		if (v:getSize() < size ) then
+			termMon = v
 		end
 	end
-	return monObj
+	return termMon
 end
 
-function View:redirectToTerm()
-	term.redirect(self.termMon.obj)
-	self.termMon:reset()
+function View:redirToTerm()
+	term.redirect(self.termMon)
 end
+--Do the hardwork
+v = View:new(nil, getMonitors())
+v:redirToTerm()
 
-function debugTable(tableObj)
-	for i, obj in pairs(tableObj) do
-		print(i..":"..obj.id)
-	end 
-end
-
--- Do the hardwork
+print("Try to gather online devices")
 c = Controller:new()
-v = View:new(_, c:getMonitors())
-v:redirectToTerm()
---c:regulate()
+c:regulate()
