@@ -5,17 +5,22 @@ wSide = "left"
 mSide = "back"
 
 -- Device class, mother of all
-Device = {id = ""}
-function Device:new (o, id, number, obj, category, shortName)
-	o = o or {}
-	setmetatable(o, self)
-	self.__index = self
+local Device = {}
+Device.__index = Device
+
+setmetatable(Device ,{
+	__call = function (cls, ...)
+	local self = setmetatable({}, cls)
+	self:_init(...)
+	return self
+end,
+})
+function Device:_init (id, number, obj, category, shortName)
 	self.id = id or "N/A"
 	self.number = number or "N/A"
 	self.obj = obj or "N/A"
 	self.category = category or "N/A"
 	self.shortName = shortName or "N/A"
-	return o
 end
 
 function Device:getCategory()
@@ -23,14 +28,21 @@ function Device:getCategory()
 end
 
 --Reactor class from Device
-Reactor = Device:new()
-function Reactor:new(o, id)
-	o = o or {}
-	setmetatable(o, self)
-	self.__index = self
+local Reactor = {}
+Reactor.__index = Reactor
+
+setmetatable(Reactor, {
+	__index = Device,
+	__call = function(cls, ...)
+	local self = setmetatable({}, cls)
+	self:_init(...)
+	return self
+end,
+})
+
+function Reactor:_init(id)
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
-	return o
 end
 
 function Reactor:getConnected() 
@@ -78,15 +90,21 @@ function Reactor:getYelloriumConsumption()
 end
 
 --Monitor class
-Monitor = Device:new()
-function Monitor:new(o, id, width, height)
-	o = o or {}
-	setmetatable(o, self)
-	self.__index = self
+local Monitor = {}
+Monitor.__index = Monitor
+
+setmetatable(Monitor, {
+	__index = Device,
+	__call = function(cls, ...)
+	local self = setmetatable({}, cls)
+	self:_init(...)
+	return self
+end,
+})
+function Monitor:_init(id, width, height)
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
-	self.width, self.height = width, height or self:getSize()
-	return o
+	self.width, self.height = width, height
 end
 
 function Monitor:getSize()
@@ -119,23 +137,28 @@ end
 
 function Monitor:writeOut(what, putNewLine)
 	self.putNewLine = putNewLine or false
-	x, y = self:getPos()
+	x, y = self.getPos()
 	self.obj.write(what)
 	if putNewLine then
-		self:setPos(x, y+1)
+		self.setPos(x, y+1)
 	end
 end
 
 -- Turbine Class
+local Turbine = {}
+Turbine.__index = Turbine
 
-Turbine = Device:new()
-function Turbine:new(o, id)
-	o = o or {}
-	setmetatable(o, self)
-	self.__index = self
+setmetatable(Turbine, {
+	__index = Device,
+	__call = function(cls, ...)
+	local self = setmetatable({}, cls)
+	self:_init(...)
+	return self
+end,
+})
+function Turbine:_init(id)
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
-	return o
 end
 
 function Turbine:getConnected()
@@ -176,16 +199,22 @@ function Turbine:setOffline()
 end
 
 --Capacitor class
-Capacitor = Device:new()
-function Capacitor:new(o, id, blockCount, blockStore)
-	o = o or {}
-	setmetatable(o, self)
-	self.__index = self
+local Capacitor = {}
+Capacitor.__index = Capacitor
+
+setmetatable(Capacitor, {
+	__index = Device,
+	__call = function(cls, ...)
+	local self = setmetatable({}, cls)
+	self:_init(...)
+	return self
+end,
+})
+function Capacitor:_init(id, blockCount, blockStore)
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
 	self.blockCount = blockCount or 51
 	self.blockStore = blockStore or 2500000
-	return o
 end
 
 function Capacitor:getCapacity()
@@ -207,11 +236,17 @@ function Capacitor:getFlow()
 end
 
 --Controller class with some Vytutas mineral water
-Controller = { id = "" }
-function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minStoredPercent, maxStoredPercent, yelloriumEmitterLevel, controlledDevices, countByType, liveSettings)
-	o = o or {}
-	setmetatable(o, self)
-	self.__index = self
+local Controller = {}
+Controller.__index = Controller
+
+setmetatable(Capacitor, {
+	__call = function (cls, ...)
+	local self = setmetatable({}, cls)
+	self:_init(...)
+	return self
+end,
+})
+function Controller:_init(optimalRPM, optimalRodPercent, minTemp, maxTemp, minStoredPercent, maxStoredPercent, yelloriumEmitterLevel, controlledDevices, countByType, liveSettings)
 	self.optimalRPM = optimalRPM or 1870
 	self.optimalRodPercent = optimalRodPercent or 40
 	self.minTemp = minTemp or 500
@@ -222,7 +257,6 @@ function Controller:new(o, optimalRPM, optimalRodPercent, minTemp, maxTemp, minS
 	self.controlledDevices = controlledDevices or self:wrapAll()
 	self.countByType = countByType or self:countTypes()
 	self.liveSettings = liveSettings or { maintenanceByLever = false, maintenancebyPalm = false, maintenancebyYelloriumLevel = false, generate = false, forceOnLine = false }
-	return o
 end
 
 function Controller:countTypes()
@@ -246,16 +280,16 @@ function Controller:wrapAll()
 		write(v.." ")
 		--Digsite
 		if string.find(v, "-Reactor") then
-			table.insert(controlledDevices, Reactor:new(nil, v))
+			table.insert(controlledDevices, Reactor(v))
 			controlledDevices[#controlledDevices].category = "reactor"
 		elseif string.find(v, "Turbine") then
-			table.insert(controlledDevices, Turbine:new(nil, v))
+			table.insert(controlledDevices, Turbine(v))
 			controlledDevices[#controlledDevices].category = "turbine"
 		elseif string.find(v, "capacitor") then
-			table.insert(controlledDevices, Capacitor:new(nil, v))
+			table.insert(controlledDevices, Capacitor(v))
 			controlledDevices[#controlledDevices].category = "capacitor"
 		elseif string.find(v, "monitor") then
-			table.insert(controlledDevices, Monitor:new(nil, v))
+			table.insert(controlledDevices, Monitor(v))
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
 		print("Connected")
@@ -369,21 +403,31 @@ function Controller:getMonitors()
 end
 
 --View
-function View:new (o, monitors)
-	o = o or {}
-	setmetatable(o, self)
-	self.__index = self
+local View = {}
+View.__index = View
+
+setmetatable(View ,{
+	__call = function (cls, ...)
+	local self = setmetatable({}, cls)
+	self:_init(...)
+	return self
+end,
+})
+function View:_init(monitors)
 	self.monitors = monitors or {}
 	self.termMon = self:findTerm()
-	return o
 end
 
 function View:findTerm()
 	size = 256
 	termMon = {}
 	for i, v in pairs(self.monitors) do
-		if (v:getSize() < size ) then
+		nusize = v:getSize() 
+		if (nusize < size ) then
 			termMon = v
+			size = nusize
+		else
+			size = nusize
 		end
 	end
 	return termMon
@@ -392,10 +436,11 @@ end
 function View:redirToTerm()
 	term.redirect(self.termMon)
 end
---Do the hardwork
-v = View:new(nil, getMonitors())
-v:redirToTerm()
 
+--Do the hardwork
 print("Try to gather online devices")
 c = Controller:new()
+vw = View(c:getMonitors())
+vw:redirToTerm()
 c:regulate()
+print("Ede Teller Must Be Proud!")
