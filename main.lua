@@ -439,7 +439,7 @@ end
 
 --Do the hardwork
 print("Try to gather online devices")
-c = Controller:new()
+c = Controller()
 vw = View(c:getMonitors())
 vw:redirToTerm()
 c:regulate()
