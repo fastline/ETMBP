@@ -395,7 +395,7 @@ end
 function Controller:getMonitors()
 	monitors = {}
 	for i, v in pairs(controlledDevices) do
-		if v:getCategory() == "monitor" then
+		if (v:getCategory() == "monitor") then
 			table.insert(monitors, v)
 		end
 	end
@@ -414,7 +414,7 @@ setmetatable(View ,{
 end,
 })
 function View:_init(monitors)
-	self.monitors = monitors or {}
+	self.monitors = monitors
 	self.termMon = self:findTerm()
 end
 
