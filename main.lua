@@ -434,7 +434,11 @@ function View:findTerm()
 end
 
 function View:redirToTerm()
-	term.redirect(self.termMon)
+	if self.termMon then
+		term.redirect(self.termMon)
+	else
+		print("No terminal Monitor")
+	end
 end
 
 --Do the hardwork
