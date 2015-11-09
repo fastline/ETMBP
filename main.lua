@@ -5,7 +5,7 @@ wSide = "left"
 mSide = "back"
 function printArray(a)
 	for i, v in pairs(a) do
-		print(i, " ", v)
+		print(i, " ", v.id)
 	end
 end
 -- Device class, mother of all
@@ -141,10 +141,10 @@ end
 
 function Monitor:writeOut(what, putNewLine)
 	self.putNewLine = putNewLine or false
-	x, y = self.getPos()
+	x, y = self:getPos()
 	self.obj.write(what)
 	if putNewLine then
-		self.setPos(x, y+1)
+		self:setPos(x, y+1)
 	end
 end
 
@@ -434,11 +434,14 @@ function View:findTerm()
 			size = nusize
 		end
 	end
+	termMon:reset()
+	print(termMon.id)
 	termMon:writeOut("ez vagyok")
 	return termMon
 end
 
 function View:redirToTerm()
+	print(self.termMon.id)
 	if self.termMon then
 		term.redirect(self.termMon)
 	else
@@ -452,6 +455,6 @@ c = Controller()
 mons = c:getMonitors()
 printArray(mons)
 vw = View(mons)
-vw:redirToTerm()
+term.redirect(vw.termMon)
 --c:regulate()
 print("Ede Teller Must Be Proud!")
