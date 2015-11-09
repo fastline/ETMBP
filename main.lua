@@ -3,7 +3,11 @@
 bSide = "bottom"
 wSide = "left"
 mSide = "back"
-
+function printArray(a)
+	for i, v in pairs(a) do
+		print(i, " ", v)
+	end
+end
 -- Device class, mother of all
 local Device = {}
 Device.__index = Device
@@ -445,7 +449,9 @@ end
 --Do the hardwork
 print("Try to gather online devices")
 c = Controller()
-vw = View(c:getMonitors())
+mons = c:getMonitors()
+printArray(mons)
+vw = View(mons)
 vw:redirToTerm()
-c:regulate()
+--c:regulate()
 print("Ede Teller Must Be Proud!")
