@@ -239,7 +239,7 @@ end
 local Controller = {}
 Controller.__index = Controller
 
-setmetatable(Capacitor, {
+setmetatable(Controller, {
 	__call = function (cls, ...)
 	local self = setmetatable({}, cls)
 	self:_init(...)
