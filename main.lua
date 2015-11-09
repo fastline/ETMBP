@@ -430,6 +430,7 @@ function View:findTerm()
 			size = nusize
 		end
 	end
+	termMon:writeOut("ez vagyok")
 	return termMon
 end
 
