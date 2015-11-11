@@ -3,6 +3,10 @@
 bSide = "bottom"
 wSide = "left"
 mSide = "back"
+reactorMon = "monitor_9"
+turbineMon = "monitor_10"
+terminalMon = "monitor_12"
+
 function printArray(a)
 	for i, v in pairs(a) do
 		print(i, " ", v.id)
@@ -109,6 +113,7 @@ function Monitor:_init(id, width, height)
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
 	self.width, self.height = width, height
+	self.tag = ""
 end
 
 function Monitor:getSize()
@@ -146,6 +151,24 @@ function Monitor:writeOut(what, putNewLine)
 	if putNewLine then
 		self:setPos(x, y+1)
 	end
+end
+
+function Monitor:getTag()
+	return self.tag
+end
+
+function Monitor:setTag(newTag)
+	self.tag = newTag
+end
+
+function Monitor:tagMonitors()
+		if (self.id == reactorMon) then
+			self:setTag("reactor")
+		elseif (self.id == turbineMon) then
+			self:setTag("turbine")
+		elseif (self.id == termMon) then
+			self:setTag("terminal")
+		end
 end
 
 -- Turbine Class
@@ -419,33 +442,29 @@ end,
 })
 function View:_init(monitors)
 	self.monitors = monitors
-	self.termMon = self:findTerm()
 end
 
-function View:findTerm()
-	size = 256
-	termMon = {}
+function View:selectMonitor(monTag)
 	for i, v in pairs(self.monitors) do
-		nusize = v:getSize() 
-		if (nusize < size ) then
-			termMon = v
-			size = nusize
-		else
-			size = nusize
+		if (monTag == v.id) then
+			return v
 		end
 	end
-	termMon:reset()
-	print(termMon.id)
-	termMon:writeOut("ez vagyok")
-	return termMon
 end
 
-function View:redirToTerm()
-	print(self.termMon.id)
-	if self.termMon then
-		term.redirect(self.termMon)
-	else
-		print("No terminal Monitor")
+function View:printOut(monTag, text, newLine, color, bColor)
+	mon = self:selectMonitor(monTag)
+	print(mon.id)
+	mon:setColor(color or colors.green)
+	mon:setBGColor(bColor or colors.black)
+	mon:writeOut(text, newLine)
+	mon:setColor(colors.green)
+	mon:setBGColor(colors.black)
+end
+
+function View:resetAllMonitor()
+	for i, v in pairs(self.monitors) do
+		v:reset()
 	end
 end
 
@@ -455,6 +474,7 @@ c = Controller()
 mons = c:getMonitors()
 printArray(mons)
 vw = View(mons)
-term.redirect(vw.termMon)
+vw:resetAllMonitor()
+vw:printOut(reactorMon, "Monitor 1", true, colors.green, colors.black)
 --c:regulate()
 print("Ede Teller Must Be Proud!")
