@@ -109,10 +109,9 @@ setmetatable(Monitor, {
 	return self
 end,
 })
-function Monitor:_init(id, width, height)
+function Monitor:_init(id)
 	self.id = id or "N/A"
 	self.obj = peripheral.wrap(self.id)
-	self.width, self.height = width, height
 	self.tag = ""
 end
 
@@ -149,7 +148,7 @@ function Monitor:writeOut(what, putNewLine)
 	x, y = self:getPos()
 	self.obj.write(what)
 	if putNewLine then
-		self:setPos(x, y+1)
+		self:setPos(1, y+1)
 	end
 end
 
@@ -294,9 +293,6 @@ function Controller:countTypes()
 		elseif v.category == "reactor" then countByType["reactor"] = countByType["reactor"] + 1
 		elseif v.category == "capacitor" then countByType["capacitor"] = countByType["capacitor"] + 1 end
 	end
-	for i, v in pairs(countByType) do
-		print(i.." "..v)
-	end
 	return countByType
 end
 
@@ -304,7 +300,6 @@ function Controller:wrapAll()
 	devicesList = peripheral.getNames()
 	controlledDevices = {}
 	for i, v in pairs(devicesList) do
-		write(v.." ")
 		--Digsite
 		if string.find(v, "-Reactor") then
 			table.insert(controlledDevices, Reactor(v))
@@ -319,7 +314,6 @@ function Controller:wrapAll()
 			table.insert(controlledDevices, Monitor(v))
 			controlledDevices[#controlledDevices].category = "monitor"
 		end
-		print("Connected")
 	end
 	return controlledDevices
 end
@@ -454,11 +448,16 @@ end
 
 function View:printOut(monTag, text, newLine, color, bColor)
 	mon = self:selectMonitor(monTag)
-	print(mon.id)
-	mon:setColor(color or colors.green)
+	col, row = mon:getPos()
+	_, height = mon:getSize()
+	if (height < row) and newLine then
+		mon.obj.scroll(1)
+		mon:setPos(col, height-1)
+	end
+	mon:setColor(color or colors.white)
 	mon:setBGColor(bColor or colors.black)
 	mon:writeOut(text, newLine)
-	mon:setColor(colors.green)
+	mon:setColor(colors.white)
 	mon:setBGColor(colors.black)
 end
 
@@ -468,13 +467,56 @@ function View:resetAllMonitor()
 	end
 end
 
+function View:listDevices(controller)
+	for i, v in pairs(controller.controlledDevices) do
+		if ((v:getCategory() == "reactor") or (v:getCategory() == "turbine")) then
+			self:printOut(terminalMon, v.id)
+			if v:getConnected() then
+				self:printOut(terminalMon, " OK", true, colors.green)
+			else
+				self:printOut(terminalMon, " NOT OK", true, colors.red)
+			end
+		else
+			self:printOut(terminalMon, v.id)
+			if v.obj then
+				self:printOut(terminalMon, " OK", true, colors.green)
+			else
+				self:printOut(terminalMon, " NOT OK", true, colors.red)
+			end
+		end
+	end
+end
+
+function View:printCount(controller)
+	for i, v in pairs(controller.countByType) do
+		text = v.." "..i
+		self:printOut(terminalMon, text, true)
+	end
+end
+
+function View:postScreen(controller)
+	self:printOut(terminalMon, "ETMBP Started", true)
+	self:printOut(terminalMon, "Check for connected devices...", true)
+	self:listDevices(controller)
+	text = tostring(#controller.controlledDevices).." Device reached"
+	self:printOut(terminalMon, text, true)
+	self:printCount(controller)
+end
+
+function View:redirect(mon)
+	target = vw:selectMonitor(mon)
+	oldmon = term.redirect(target.obj)
+	return oldmon
+end
+
 --Do the hardwork
 print("Try to gather online devices")
 c = Controller()
-mons = c:getMonitors()
-printArray(mons)
-vw = View(mons)
+vw = View(c:getMonitors())
 vw:resetAllMonitor()
-vw:printOut(reactorMon, "Monitor 1", true, colors.green, colors.black)
+vw:redirect(terminalMon)
+vw:postScreen(c)
+vw:postScreen(c)
+--vw:printOut(reactorMon, "Monitor 1", true, colors.green, colors.black)
 --c:regulate()
 print("Ede Teller Must Be Proud!")
